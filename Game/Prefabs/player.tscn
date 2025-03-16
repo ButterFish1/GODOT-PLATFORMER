@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://cyg57h4bl87rs"]
+
+[ext_resource type="Script" uid="uid://dc2wgwejd3v62" path="res://Game/Scripts/Gameplay/Core/Components/Movement/MoveComponent.gd" id="1_1em4a"]
+[ext_resource type="Script" uid="uid://b3tpde3yssfa8" path="res://Game/Scripts/Gameplay/Core/Components/Movement/JumpComponent.gd" id="2_howe3"]
+[ext_resource type="Script" uid="uid://cu212xicauson" path="res://Game/Scripts/Gameplay/Core/Components/Movement/FallComponent.gd" id="3_jgkq3"]
+[ext_resource type="Script" uid="uid://ce8shkq1y3j66" path="res://Game/Scripts/Gameplay/Systems/Controllers/Player/PlayerMovementController.gd" id="4_f41jw"]
+[ext_resource type="Script" uid="uid://c8f5jjkuses8n" path="res://Game/Scripts/Gameplay/Systems/Controllers/Player/PlayerDeathController.gd" id="5_howe3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fonpi"]
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="Components" type="Node" parent="."]
+
+[node name="MoveComponent" type="Node" parent="Components" node_paths=PackedStringArray("_actor")]
+script = ExtResource("1_1em4a")
+_actor = NodePath("../..")
+_speed = 4500.0
+metadata/_custom_type_script = "uid://dc2wgwejd3v62"
+
+[node name="JumpComponent" type="Node" parent="Components" node_paths=PackedStringArray("_actor")]
+script = ExtResource("2_howe3")
+_actor = NodePath("../..")
+_force = -125.0
+metadata/_custom_type_script = "uid://b3tpde3yssfa8"
+
+[node name="FallComponent" type="Node" parent="Components" node_paths=PackedStringArray("_actor")]
+script = ExtResource("3_jgkq3")
+_actor = NodePath("../..")
+_gravity = 175.0
+metadata/_custom_type_script = "uid://cu212xicauson"
+
+[node name="Controllers" type="Node" parent="."]
+
+[node name="PlayerMovementController" type="Node" parent="Controllers" node_paths=PackedStringArray("_actor", "_move_component", "_jump_component", "_fall_component")]
+script = ExtResource("4_f41jw")
+_actor = NodePath("../..")
+_move_component = NodePath("../../Components/MoveComponent")
+_jump_component = NodePath("../../Components/JumpComponent")
+_fall_component = NodePath("../../Components/FallComponent")
+metadata/_custom_type_script = "uid://ce8shkq1y3j66"
+
+[node name="PlayerDeathController" type="Node" parent="Controllers" node_paths=PackedStringArray("_actor")]
+script = ExtResource("5_howe3")
+_actor = NodePath("../..")
+_max_y_position = 200.0
+metadata/_custom_type_script = "uid://c8f5jjkuses8n"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_fonpi")

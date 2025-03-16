@@ -1,0 +1,118 @@
+[gd_scene load_steps=6 format=3 uid="uid://beoyavo8sgqw8"]
+
+[ext_resource type="Script" uid="uid://1gog0xie37ra" path="res://Game/Scripts/Gameplay/Content/FinishZone/FinishZone.gd" id="1_krjkx"]
+[ext_resource type="PackedScene" uid="uid://cyg57h4bl87rs" path="res://Game/Prefabs/player.tscn" id="1_ne10a"]
+[ext_resource type="Script" uid="uid://bsvja6gxgkh2c" path="res://Game/Scripts/Gameplay/Content/UIRoot/UIRoot.gd" id="3_ivj0m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lgi3o"]
+size = Vector2(86, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_krjkx"]
+size = Vector2(49, 45)
+
+[node name="World" type="Node"]
+
+[node name="Envirioment" type="Node" parent="."]
+
+[node name="Platform" type="StaticBody2D" parent="Envirioment"]
+position = Vector2(145, 91)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Envirioment/Platform"]
+shape = SubResource("RectangleShape2D_lgi3o")
+
+[node name="Platform2" type="StaticBody2D" parent="Envirioment"]
+position = Vector2(287, 153)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Envirioment/Platform2"]
+shape = SubResource("RectangleShape2D_lgi3o")
+
+[node name="Platform3" type="StaticBody2D" parent="Envirioment"]
+position = Vector2(437, 155)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Envirioment/Platform3"]
+shape = SubResource("RectangleShape2D_lgi3o")
+
+[node name="Platform4" type="StaticBody2D" parent="Envirioment"]
+position = Vector2(585, 126)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Envirioment/Platform4"]
+shape = SubResource("RectangleShape2D_lgi3o")
+
+[node name="FinishZone" type="Node2D" parent="Envirioment" node_paths=PackedStringArray("_area_2d", "_ui_root")]
+position = Vector2(591, 95)
+script = ExtResource("1_krjkx")
+_area_2d = NodePath("Area2D")
+_ui_root = NodePath("../../Player/Camera2D/CanvasLayer/UIRoot")
+
+[node name="Area2D" type="Area2D" parent="Envirioment/FinishZone"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Envirioment/FinishZone/Area2D"]
+position = Vector2(0.5, -12.5)
+shape = SubResource("RectangleShape2D_krjkx")
+
+[node name="Player" parent="." instance=ExtResource("1_ne10a")]
+position = Vector2(136, 34)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(-136, -34)
+position_smoothing_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Player/Camera2D"]
+
+[node name="UIRoot" type="Control" parent="Player/Camera2D/CanvasLayer" node_paths=PackedStringArray("finish_screen", "quit_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_ivj0m")
+finish_screen = NodePath("FinishScreen")
+quit_button = NodePath("FinishScreen/Panel/Button")
+metadata/_edit_use_anchors_ = true
+
+[node name="FinishScreen" type="Control" parent="Player/Camera2D/CanvasLayer/UIRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="Player/Camera2D/CanvasLayer/UIRoot/FinishScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Player/Camera2D/CanvasLayer/UIRoot/FinishScreen/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00173611
+anchor_top = -0.00308642
+anchor_right = 0.998264
+anchor_bottom = 0.996914
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 49
+text = "Victory"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Player/Camera2D/CanvasLayer/UIRoot/FinishScreen/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.859375
+anchor_right = 1.0
+anchor_bottom = 0.0632716
+grow_horizontal = 0
+text = "Quit"
+metadata/_edit_use_anchors_ = true
